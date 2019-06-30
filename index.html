@@ -6,7 +6,6 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/jgthms/minireset.css/master/minireset.css">
     <title>Directory: Denver Freelancers</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
@@ -53,7 +52,7 @@
         <div class="directory" v-if="people">
 
           <div class="container" v-for="(person, index) in people" v-if="person.working && person.help && person.need">
-            <div :id="'profile_' + index" class="profile" v-show="person.filtered()">
+            <div :id="'profile_' + index" class="profile text-dark" v-show="person.filtered()">
 
               <div class="profile__headshot" :style="'background-image: url(' + person.headshot + ')'">
                 <p class="profile__location" v-if="person.location"><label>Location</label> {{ person.location }}</p>
@@ -78,6 +77,10 @@
                 <p v-if="person.need"><label>Needs Help With:</label><br> {{ person.need }}</p>
               </div>
 
+              <div class="profile__footer">
+                Join the <strong>Better Together</strong> Directory at <strong>denverfreelancing.com/directory/join</strong>
+              </div>
+
             </div>
             <div class="profile__meta">
               <div class="profile__color">
@@ -85,7 +88,7 @@
                 <span class="profile__color-block" v-for="color in bgColors" :style="{backgroundColor: color}" @click="setColor('profile_' + index, color)"></span>
               </div>
               <strong>Insta Copy</strong> <br>
-              <textarea name="name" rows="14" cols="80" onclick="this.focus();this.select()">Freelance Feature: Today we look at {{ person.name }} {{ getInstagram( person.links.instagram ) }}
+              <textarea class="textarea" name="name" rows="14" cols="80">Freelance Feature: Today we look at {{ person.name }} {{ getInstagram( person.links.instagram ) }}
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 .
@@ -93,10 +96,14 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 .
 #denverFreelance #BetterTogether #denverFreelancing #freelanceFeature</textarea>
               <br>
-              <a href="#" @click.prevent="savePNG( 'profile_' + index )">Generate PNG</a>
-
+              <a class="button is-primary" href="#" @click.prevent="savePNG( 'profile_' + index )">Generate PNG</a>
+              <small>Rendered images appear below:</small>
+              <div :id="'profile_' + index + '_images'" class="rendered_images">
+              </div>
             </div>
+            <hr>
           </div>
+
 
         </div>
       </div>

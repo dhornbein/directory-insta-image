@@ -212,7 +212,7 @@ var app = new Vue({
         .then(function (dataUrl) {
           var img = new Image();
           img.src = dataUrl;
-          node.parentElement.appendChild(img);
+          document.getElementById( id + '_images' ).prepend(img);
         })
         .catch(function (error) {
           console.error('oops, something went wrong!', error);
