@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/jgthms/minireset.css/master/minireset.css">
+    <title>Directory: Denver Freelancers</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" integrity="sha256-2pUeJf+y0ltRPSbKOeJh09ipQFYxUdct5nTY6GAXswA=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="style-directory.css" rel="stylesheet">
+  </head>
+  <body>
+    <section class="hero is-info is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Freelancers Directory
+          </h1>
+          <a class="button is-warning is-pulled-right" href="/directory/join.html">
+            <span class="icon is-small">
+              <i class="fas fa-plus"></i>
+            </span>
+            &nbsp;
+            List yourself
+          </a>
+          <h2 class="subtitle">
+            Welcome to a directory of Freelancers in the Denver area.
+          </h2>
+        </div>
+      </div>
+      <div class="hero-foot">
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div id="main" class="container is-fluid" v-if="loaded">
+
+        <div class="field is-grouped is-grouped-multiline is-large" v-if="showTags">
+          <div class="control" v-for="skill in filteredSkills.others">
+            <a class="tags has-addons" @click="toggleFilter('skills', skill )">
+              <div class="tag" :class="{ 'is-primary': skill.slug in filter.skills }">{{ skill.label }}</div>
+              <div class="tag is-info" v-if="skill.count > 1">{{ skill.count }}</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="directory" v-if="people">
+
+          <div class="container" v-for="(person, index) in people" v-if="person.working && person.help && person.need">
+            <div :id="'profile_' + index" class="profile" v-show="person.filtered()">
+
+              <div class="profile__headshot" :style="'background-image: url(' + person.headshot + ')'">
+                <p class="profile__location" v-if="person.location"><label>Location</label> {{ person.location }}</p>
+              </div>
+
+              <div class="profile__info">
+                <p class="title is-4">{{ person.name }}</p>
+                <p class="subtitle is-6 has-text-weight-bold">
+                  {{ person.trade }}
+                </p>
+                <div class="links">
+                  <a :href="link.url" class="profile__link" v-for="link in person.links" v-if="link.url" target="_blank" :title="link.label">
+                    <span class="icon"><i :class="link.icon"></i></span>
+                    <span class="label">{{ socialName( link.url, link.label ) }}</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="profile__content">
+                <p v-if="person.working"><label>Working on:</label><br> {{ person.working }}</p>
+                <p v-if="person.help"><label>Can Help With:</label><br> {{ person.help }}</p>
+                <p v-if="person.need"><label>Needs Help With:</label><br> {{ person.need }}</p>
+              </div>
+
+            </div>
+            <div class="profile__meta">
+              <div class="profile__color">
+                <strong>Background:</strong>
+                <span class="profile__color-block" v-for="color in bgColors" :style="{backgroundColor: color}" @click="setColor('profile_' + index, color)"></span>
+              </div>
+              <strong>Insta Copy</strong> <br>
+              <textarea name="name" rows="14" cols="80" onclick="this.focus();this.select()">Freelance Feature: Today we look at {{ person.name }} {{ getInstagram( person.links.instagram ) }}
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+.
+.
+.
+#denverFreelance #BetterTogether #denverFreelancing #freelanceFeature</textarea>
+              <br>
+              <a href="#" @click.prevent="savePNG( 'profile_' + index )">Generate PNG</a>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <script src="dom-to-image.min.js" charset="utf-8"></script>
+    <script src="script-directory.js" charset="utf-8"></script>
+  </body>
+</html>

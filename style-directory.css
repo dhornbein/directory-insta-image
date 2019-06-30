@@ -1,0 +1,100 @@
+.directory {
+}
+
+.profile {
+  background-color: #FFCA00;
+}
+
+.profile.text-dark,
+.profile.text-dark .profile__link {
+  color: #161616;
+}
+
+.profile.text-light,
+.profile.text-light .profile__link,
+.profile.text-light .label,
+.profile.text-light .title,
+.profile.text-light .subtitle {
+  color: #fcfcfc;
+}
+
+.profile__location {
+  color: #888;
+  background-color: #fffC;
+}
+
+.profile {
+  box-sizing: border-box;
+  border: 1px solid #000;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  position: relative;
+  width: 640px;
+  height: 640px;
+  /* margin: 10px; */
+}
+
+.profile__headshot {
+    border-right: 1px solid #000;
+    background-size: cover;
+}
+.profile__info {
+    padding: 10px;
+}
+.profile__content {
+  grid-column: span 2;
+  border-top: 1px solid #000;
+  padding: 10px;
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.profile .title {
+  text-transform:capitalize;
+}
+
+.profile .subtitle:first-letter {
+  text-transform:capitalize;
+}
+
+.profile__location {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+  font-size: 0.7em;
+  padding: 0.5em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.profile__location label { display: none; }
+
+.connect {
+  padding-bottom: .75rem;
+}
+
+.profile label {
+  font-weight: bold;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.profile__link {
+  display: block;
+}
+.profile__link .label {
+  display: inline-block;
+  font-weight: normal;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.profile__color-block {
+  width: 2ch;
+  height: 2ch;
+  display: inline-block;
+}
