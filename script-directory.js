@@ -205,14 +205,17 @@ var app = new Vue({
         return null;
       }
     },
-    savePNG: function( id ) {
+    savePNG: function( id, options ) {
       var node = document.getElementById( id );
 
-      domtoimage.toPng(node)
+      node.classList.toggle('rendering');
+
+      domtoimage.toPng(node, options)
         .then(function (dataUrl) {
           var img = new Image();
           img.src = dataUrl;
           document.getElementById( id + '_images' ).prepend(img);
+          node.classList.toggle('rendering');
         })
         .catch(function (error) {
           console.error('oops, something went wrong!', error);
