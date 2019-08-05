@@ -8,10 +8,9 @@ var app = new Vue({
     // base information about the target spreadsheet
     base: {
       // spreadsheet ID
-      id: "appp8RtGvuKgXkJz2",
-      view: {
-        people: 'tblo4BL8WA3CF62j0'
-      }
+      id: "appnI6NxijahqhwNo",
+      table: 'tblkv17A5fiHT9LKN',
+      view: 'viwsPmvqI8gWO3dFo'
     },
     filter: {
       skills: {}
@@ -47,9 +46,9 @@ var app = new Vue({
     getData: function () {
       var fresh = new URL(window.location.href).searchParams.get('fresh')
 
-      if ( fresh || ! this.getCache( this.base.id, this.base.view.people )) {
-        this.fetchData( this.base.id, this.base.view.people );
-      }
+      // if ( fresh || ! this.getCache( this.base.table, this.base.view )) {
+        this.fetchData( this.base.id, this.base.table, this.base.view );
+      // }
     },
     /**
      * fetches data from google via xhr
@@ -58,14 +57,13 @@ var app = new Vue({
      * @param  {string} index the sheet id
      * @return none
      */
-    fetchData: function ( id, index ) {
+    fetchData: function ( base, table, view ) {
       // Init variables
       var self = this
-      var app_id = "appp8RtGvuKgXkJz2";
       var app_key = "key1YNmZGtZDdVMYN";
       this.items = []
       axios.get(
-          "https://api.airtable.com/v0/" + app_id + "/" + index + "?view=active",
+          "https://api.airtable.com/v0/" + base + "/" + table + "?view=" + view,
           {
               headers: { Authorization: "Bearer " + app_key }
           }
@@ -137,6 +135,126 @@ var app = new Vue({
           return true; // cache is fresh
       }
     },
+    /**
+     * strips the http and www from a url
+     * @param  {string} url a full URL for website
+     * @return {string}     a url without the http and www
+     * @TODO gracefull fail if url is null
+     */
+    stripHTTP: function ( url ) {
+      var regex = new RegExp('(https?://(?:www.)?)','gi');
+      return url.replace( regex, '' )
+    },
+    /**
+     * Removes the trailing slash from a string
+     * @param  {string} str string ready to have it's slash removed
+     * @return {return}     string, now without a slash
+     * @TODO gracefull fail if str is null
+     */
+    stripSlash: function ( str ) {
+      return str.replace(/\/$/, "");
+    },
+    /**
+     * Makes a URL pretty to look at
+     * @param  {string} url a website url
+     * @return {string}     a now pretty to look at url
+     */
+    prettyLink: function ( url ) {
+      return this.stripSlash( this.stripHTTP( url ) );
+    },
+    /**
+     * cleans up links to prevent bad things coming from user input
+     * @param  {string} url The raw url
+     * @return {string}     the clearned up url, if input is false, pass it through
+     */
+    sanitizeLink: function ( url ) {
+
+      return (url) ? '//' + this.prettyLink( url ) : url ;
+    },
+    socialName: function (url,source) {
+      url = url.replace(/^(\/\/)/,"");
+      switch (source) {
+        case 'website':
+
+          break;
+        case 'linkedin':
+          url = url.replace(/(.*\.com)/,"");
+          break;
+        case 'facebook':
+          url = url.replace(/(.*\.com)/,"");
+          break;
+        case 'twitter':
+          url = url.replace(/(.*\.com\/)/,"@");
+          break;
+        case 'instagram':
+          url = url.replace(/(.*\.com\/)/,"@");
+          break;
+        default:
+
+      }
+      return url;
+    },
+    getInstagram: function( insta ) {
+      if ( insta.url ) {
+        return this.socialName( insta.url, 'instagram' );
+      } else {
+        return null;
+      }
+    },
+    savePNG: function( id, options ) {
+      var node = document.getElementById( id );
+
+      node.classList.toggle('rendering');
+
+      domtoimage.toPng(node, options)
+        .then(function (dataUrl) {
+          var img = new Image();
+          img.src = dataUrl;
+          document.getElementById( id + '_images' ).prepend(img);
+          node.classList.toggle('rendering');
+        })
+        .catch(function (error) {
+          console.error('oops, something went wrong!', error);
+        });
+    },
+    setColor: function( id, color ) {
+        var node = document.getElementById( id );
+        node.style.backgroundColor = color;
+        if ( this.darkText( color ) ) {
+          node.classList.add('text-dark');
+          node.classList.remove('text-light');
+        } else {
+          node.classList.add('text-light');
+          node.classList.remove('text-dark');
+        }
+    },
+    darkText: function( hex ){
+
+			/*
+			From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
+
+			Color brightness is determined by the following formula:
+			((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
+
+      I know this could be more compact, but I think this is easier to read/explain.
+
+			*/
+
+			var threshold = 130; /* about half of 256. Lower threshold equals more dark text on dark background  */
+
+			var hRed = hexToR(hex);
+			var hGreen = hexToG(hex);
+			var hBlue = hexToB(hex);
+
+
+			function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+			function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+			function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+			function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+
+			var cBrightness = ((hRed * 299) + (hGreen * 587) + (hBlue * 114)) / 1000;
+			  if (cBrightness > threshold){return true;} else { return false;}
+	  },
     sortData: function( action ) {
       let out   = [],
           rows = this.spreadsheet
@@ -157,9 +275,40 @@ var app = new Vue({
   computed: {
     people() {
       return this.sortData( function(r,self){
-        let url = (r.fields.headshot) ? r.fields.headshot[0].thumbnails : false ;
+        let url = (r.fields.Headshot) ? r.fields.Headshot[0].thumbnails : false ;
         return Object.assign(r.fields, {
-          thumbnail: url
+          thumbnail: url,
+          name: r.fields['Speaker Full Name'],
+          links: {
+            website:  {
+              url: self.sanitizeLink( r.fields.Website ),
+              label: 'website',
+              icon: 'fas fa-home'
+            },
+            linkedin: {
+              url: self.sanitizeLink( r.fields.Linkedin ),
+              label: 'linkedin',
+              icon: 'fab fa-linkedin'
+            },
+            facebook: {
+              url: self.sanitizeLink( r.fields.Facebook ),
+              label: 'facebook',
+              icon: 'fab fa-facebook'
+            },
+            twitter:  {
+              url: self.sanitizeLink( r.fields.Twitter ),
+              label: 'twitter',
+              icon: 'fab fa-twitter'
+            }
+          },
+          primarySite: function () {
+            var link = this.links;
+            if ( link.website.url )  return link.website;
+            if ( link.linkedin.url ) return link.linkedin;
+            if ( link.twitter.url )  return link.twitter;
+            if ( link.facebook.url ) return link.facebook;
+            return false;
+          }
         });
       });
     }

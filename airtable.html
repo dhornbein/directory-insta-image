@@ -16,16 +16,104 @@
   <body>
 
 
-      <div id="main">
+    <div id="main">
 
-        <div class="person" v-for="person in people">
-          {{ person.name }}
-          <template v-if="person.thumbnail">
-            <img :src="person.thumbnail.small.url" :alt="'photo of ' + person.name">
-          </template>
+        <div class="container" v-for="(person, index) in people" v-if="person.thumbnail">
+
+          <div class="profile-container">
+
+            <div :id="'profile_cover_' + index" class="profile profile-cover">
+
+              <div class="profile__label">
+                Speaker Spotlight
+              </div>
+
+              <div class="profile__headshot">
+                <img :src="person.Headshot[0].url" alt="">
+              </div>
+
+              <div class="profile__info">
+                <p class="title">{{ person.name }}</p>
+                <p class="subtitle">
+                  Superpower
+                </p>
+                <p>{{ person.Superpower }}</p>
+              </div>
+
+            </div>
+
+            <div class="profile__meta">
+
+              <div class="profile__color">
+                <strong>Background:</strong>
+                <span class="profile__color-block" v-for="color in bgColors" :style="{backgroundColor: color}" @click="setColor('profile_' + index, color)"></span>
+              </div>
+
+              <strong>Insta Copy</strong> <br>
+
+              <textarea class="textarea" name="name" rows="14" cols="80">Freelance Feature: Today we look at {{ person.name }}
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+.
+.
+.
+#denverFreelance #BetterTogether #denverFreelancing #freelanceFeature</textarea>
+              <br>
+              <a class="button is-primary" href="#" @click.prevent="savePNG( 'profile_cover_' + index )">Generate PNG</a>
+              <small>Rendered images appear below:</small>
+              <div :id="'profile_cover_' + index + '_images'" class="rendered_images">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="profile-container">
+
+            <div :id="'profile_inside_' + index" class="profile profile-inside">
+
+              <div class="profile__label">
+                <p class="hash">#FBWDEN</p>
+                <p class="title">{{ person.name }}</p>
+              </div>
+
+              <div class="profile__content">
+                <p><label v-if="person.primarySite().url">{{ person.primarySite().url.replace(/^(\/\/)?(www\.)?/gm, "") }}</label></p>
+              </div>
+
+              <div class="profile__headshot" :style="'background-image: url(' + person.Headshot[0].url + ')'">
+              </div>
+
+              <div class="profile__circle">
+                <p class="profile__type">{{ person['Session Type']}}</p>
+                <p class="title">{{ person['Session Title'] }}</p>
+              </div>
+
+              <div class="flair">
+                <div class="white long"></div>
+                <div class="white long"></div>
+                <div class="short"></div>
+                <div class="short"></div>
+                <div></div>
+                <div></div>
+              </div>
+
+            </div>
+
+            <div class="profile__meta">
+
+              <a class="button is-primary" href="#" @click.prevent="savePNG( 'profile_inside_' + index, { width: 1080, height: 1350 } )">Generate PNG</a>
+              <small>Rendered images appear below:</small>
+              <div :id="'profile_inside_' + index + '_images'" class="rendered_images">
+              </div>
+            </div>
+
+          </div>
+
+
+          <hr>
         </div>
 
-      </div>
+    </div>
 
 
     <script src="dom-to-image.min.js" charset="utf-8"></script>

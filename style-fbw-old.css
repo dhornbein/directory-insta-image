@@ -119,12 +119,10 @@ body {
 /* ============================== INSIDE ==================================== */
 
 .profile-inside .profile__label {
-  width: 90%;
-  margin-top: 2em;
+  width: 55%;
+  margin-top: 2.5em;
   margin-left: 5%;
   box-sizing: border-box;
-  z-index: 1;
-  position: relative;
 }
 
 .profile-inside .profile__label .hash {
@@ -132,21 +130,20 @@ body {
   display: block;
   font-size: 0.7em;
   font-weight: 600;
-  line-height: 1;
+  line-height: .5;
 }
 .profile-inside .profile__label .title {
   color: var(--yellow);
-  font-size: 1em;
+  font-size: 1.1em;
   font-weight: 700;
   text-transform: uppercase;
-  line-height: 1;
 }
 
 .profile-inside .profile__content {
   width: 40%;
   text-align: right;
   position: absolute;
-  top: 4.8em;
+  top: 1em;
   right: 5%;
   z-index: 15;
 }
@@ -198,7 +195,7 @@ body {
 }
 .profile-inside .profile__circle p,
 .profile-inside .profile__circle ul {
-  font-size: 1em;
+  font-size: 0.7em;
   margin-bottom: 0.5em;
 }
 .profile-inside .profile__circle ul li {
@@ -213,7 +210,7 @@ body {
   font-family: 'Oswald', sans-serif;
   margin-bottom: 0.2em;
 }
-.profile-inside .profile__circle .profile__type {
+.profile-inside .profile__circle .profile__skills {
   font-style: oblique;
 }
 
@@ -232,9 +229,9 @@ body {
 .profile-inside .flair .white { background-color: white; }
 .profile-inside .flair .long { width: 8em; }
 .profile-inside .flair .short { width: 2em; }
-.profile-inside .flair div:nth-child(1) {transform: translate(4em, 0.4em);}
-.profile-inside .flair div:nth-child(2) {transform: translate(1.1em, -9.9em);}
+.profile-inside .flair div:nth-child(1) { transform: translate(3.7em, 1.8em); }
+.profile-inside .flair div:nth-child(2) { transform: translate(3.1em, -8.2em); }
 .profile-inside .flair div:nth-child(3) { transform: translate(-8.4em, -1.5em); }
-.profile-inside .flair div:nth-child(4) {transform: translate(3.6em, -2.6em);}
+.profile-inside .flair div:nth-child(4) { transform: translate(1.3em, -6em); }
 .profile-inside .flair div:nth-child(5) { transform: translate(-2.4em, 6em); }
 .profile-inside .flair div:nth-child(6) { transform: translate(-4.3em, -12.6em); }
