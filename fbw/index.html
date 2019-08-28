@@ -51,7 +51,7 @@
               <strong>Insta: </strong> <input type="text" readonly :value="person.insta"> <br>
               <strong>Insta Copy</strong> <br>
 
-              <textarea class="textarea" name="name" rows="14" cols="80">Speaker Spotlight: {{ person.name }}{{ person.insta ? ' ' + person.insta : '' }}. The topic of {{ person['First Name'] }}’s presentation is "{{ person['Session Title'] }}". {{ person['First Name'] }} is speaking on {{ person.start }}. You can add them talk to your schedule through the Sched app at the link in our bio!</textarea>
+              <textarea class="textarea" name="name" rows="14" cols="80">Speaker Spotlight: {{ person.name }}{{ person.insta ? ' ' + person.insta : '' }}. The topic of {{ person['First Name'] }}’s presentation is "{{ person['Session Title'] }}". {{ person['First Name'] }} is speaking on {{ person.start }}. You can add their talk to your schedule through the Sched app at the link in our bio!</textarea>
               <br>
               <a class="button is-primary" href="#" @click.prevent="savePNG( 'profile_cover_' + index )">Generate PNG</a>
               <small>Rendered images appear below:</small>
