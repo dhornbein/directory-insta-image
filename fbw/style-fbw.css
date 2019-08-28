@@ -4,7 +4,7 @@
 
 :root {
   --width: 13.500em;
-  --height: 16.875em;
+  --height: 13.500em;
 
   --blue: #00B3E7;
   --yellow: #E6EF00;
@@ -48,20 +48,6 @@ body {
 
 .profile.rendering {
   font-size:80px !important;
-}
-
-.profile:after {
-  content: "";
-  position: absolute;
-  width: var(--width);
-  height: var(--width);
-  border: 1px dashed red;
-  /* z-index: 1000; */
-  top: calc( calc( var(--height) - var(--width) ) / 2 );
-}
-
-.profile.rendering:after {
-  display: none;
 }
 
 .profile-cover .profile__label {
