@@ -11,7 +11,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <link href="style-fbw.css" rel="stylesheet">
+    <link href="/fbw/style-fbw.css" rel="stylesheet">
   </head>
   <body>
 
@@ -28,16 +28,15 @@
                 Speaker Spotlight
               </div>
 
-              <div class="profile__headshot">
-                <img :src="person.Headshot[0].url" alt="">
+              <div class="profile__headshot" :style="'background-image: url(' + person.Headshot[0].url + ')'">
               </div>
 
               <div class="profile__info">
+                <img src="/fbw/fbw-logo.png">
                 <p class="title">{{ person.name }}</p>
                 <p class="subtitle">
-                  Superpower
+                  Superpower: {{ person.Superpower }}
                 </p>
-                <p>{{ person.Superpower }}</p>
               </div>
 
             </div>
@@ -67,56 +66,13 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 
           </div>
 
-          <div class="profile-container">
-
-            <div :id="'profile_inside_' + index" class="profile profile-inside">
-
-              <div class="profile__label">
-                <p class="hash">#FBWDEN</p>
-                <p class="title">{{ person.name }}</p>
-              </div>
-
-              <div class="profile__content">
-                <p><label v-if="person.primarySite().url">{{ person.primarySite().url.replace(/^(\/\/)?(www\.)?/gm, "") }}</label></p>
-              </div>
-
-              <div class="profile__headshot" :style="'background-image: url(' + person.Headshot[0].url + ')'">
-              </div>
-
-              <div class="profile__circle">
-                <p class="profile__type">{{ person['Session Type']}}</p>
-                <p class="title">{{ person['Session Title'] }}</p>
-              </div>
-
-              <div class="flair">
-                <div class="white long"></div>
-                <div class="white long"></div>
-                <div class="short"></div>
-                <div class="short"></div>
-                <div></div>
-                <div></div>
-              </div>
-
-            </div>
-
-            <div class="profile__meta">
-
-              <a class="button is-primary" href="#" @click.prevent="savePNG( 'profile_inside_' + index, { width: 1080, height: 1350 } )">Generate PNG</a>
-              <small>Rendered images appear below:</small>
-              <div :id="'profile_inside_' + index + '_images'" class="rendered_images">
-              </div>
-            </div>
-
-          </div>
-
-
           <hr>
         </div>
 
     </div>
 
 
-    <script src="dom-to-image.min.js" charset="utf-8"></script>
-    <script src="script-airtables.js" charset="utf-8"></script>
+    <script src="../dom-to-image.min.js" charset="utf-8"></script>
+    <script src="/fbw/script-fbw.js" charset="utf-8"></script>
   </body>
 </html>
