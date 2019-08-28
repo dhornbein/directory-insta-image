@@ -15,6 +15,13 @@ var app = new Vue({
     filter: {
       skills: {}
     },
+    dateOptions: {
+      weekday: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    },
     spreadsheet: [],
     cacheLifttime: 0*60*1000, //minutes*60*1000
     loaded: false,
@@ -171,35 +178,12 @@ var app = new Vue({
 
       return (url) ? '//' + this.prettyLink( url ) : url ;
     },
-    socialName: function (url,source) {
-      url = url.replace(/^(\/\/)/,"");
-      switch (source) {
-        case 'website':
-
-          break;
-        case 'linkedin':
-          url = url.replace(/(.*\.com)/,"");
-          break;
-        case 'facebook':
-          url = url.replace(/(.*\.com)/,"");
-          break;
-        case 'twitter':
-          url = url.replace(/(.*\.com\/)/,"@");
-          break;
-        case 'instagram':
-          url = url.replace(/(.*\.com\/)/,"@");
-          break;
-        default:
-
-      }
+    sanitizeInstagram: function (url, prepend) {
+      if ( ! url ) return null;
+      url = this.prettyLink( url );
+      url = url.replace(/(.*\.com\/)|(^@)|/,"@");
+      console.log(url);
       return url;
-    },
-    getInstagram: function( insta ) {
-      if ( insta.url ) {
-        return this.socialName( insta.url, 'instagram' );
-      } else {
-        return null;
-      }
     },
     savePNG: function( id, options ) {
       var node = document.getElementById( id );
@@ -279,36 +263,8 @@ var app = new Vue({
         return Object.assign(r.fields, {
           thumbnail: url,
           name: r.fields['Speaker Full Name'],
-          links: {
-            website:  {
-              url: self.sanitizeLink( r.fields.Website ),
-              label: 'website',
-              icon: 'fas fa-home'
-            },
-            linkedin: {
-              url: self.sanitizeLink( r.fields.Linkedin ),
-              label: 'linkedin',
-              icon: 'fab fa-linkedin'
-            },
-            facebook: {
-              url: self.sanitizeLink( r.fields.Facebook ),
-              label: 'facebook',
-              icon: 'fab fa-facebook'
-            },
-            twitter:  {
-              url: self.sanitizeLink( r.fields.Twitter ),
-              label: 'twitter',
-              icon: 'fab fa-twitter'
-            }
-          },
-          primarySite: function () {
-            var link = this.links;
-            if ( link.website.url )  return link.website;
-            if ( link.linkedin.url ) return link.linkedin;
-            if ( link.twitter.url )  return link.twitter;
-            if ( link.facebook.url ) return link.facebook;
-            return false;
-          }
+          insta: self.sanitizeInstagram( r.fields.Instagram, 'instagram' ),
+          start: new Date( r.fields['Date Time'] ).toLocaleDateString("en-US", self.dateOptions)
         });
       });
     }

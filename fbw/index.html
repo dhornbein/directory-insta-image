@@ -22,14 +22,12 @@
 
           <div class="profile-container">
 
-            <div :id="'profile_cover_' + index" class="profile profile-cover">
+            <div :id="'profile_cover_' + index"
+                 class="profile profile-cover"
+                 :class="{ mirror: person.mirror, cover: person.cover, center: person.center }">
 
-              <div class="profile__label">
-                Speaker Spotlight
-              </div>
-
-              <div class="profile__headshot" :style="'background-image: url(' + person.Headshot[0].url + ')'">
-              </div>
+              <div class="profile__headshot-bg" :style="'background-image: url(' + person.Headshot[0].url + ')'"></div>
+              <div class="profile__headshot" :style="'background-image: url(' + person.Headshot[0].url + ')'"></div>
 
               <div class="profile__info">
                 <img src="/fbw/fbw-logo.png">
@@ -43,20 +41,17 @@
 
             <div class="profile__meta">
 
-              <div class="profile__color">
-                <strong>Background:</strong>
-                <span class="profile__color-block" v-for="color in bgColors" :style="{backgroundColor: color}" @click="setColor('profile_' + index, color)"></span>
+              <div class="profile__adjust">
+                <strong>Adjust:</strong>
+                <label :for="'mirror_' + index"> <input :id="'mirror_' + index" type="checkbox" v-model="person.mirror"> Mirror</label>
+                <label :for="'cover_' + index"> <input :id="'cover_' + index" type="checkbox" v-model="person.cover"> Cover</label>
+                <label :for="'center_' + index"> <input :id="'center_' + index" type="checkbox" v-model="person.center"> Center</label>
               </div>
 
+              <strong>Insta: </strong> <input type="text" readonly :value="person.insta"> <br>
               <strong>Insta Copy</strong> <br>
 
-              <textarea class="textarea" name="name" rows="14" cols="80">Freelance Feature: Today we look at {{ person.name }}
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-.
-.
-.
-#denverFreelance #BetterTogether #denverFreelancing #freelanceFeature</textarea>
+              <textarea class="textarea" name="name" rows="14" cols="80">Speaker Spotlight: {{ person.name }}{{ person.insta ? ' ' + person.insta : '' }}. The topic of {{ person['First Name'] }}’s presentation is "{{ person['Session Title'] }}". {{ person['First Name'] }} is speaking on {{ person.start }}. You can add them talk to your schedule through the Sched app at the link in our bio!</textarea>
               <br>
               <a class="button is-primary" href="#" @click.prevent="savePNG( 'profile_cover_' + index )">Generate PNG</a>
               <small>Rendered images appear below:</small>
@@ -66,7 +61,6 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 
           </div>
 
-          <hr>
         </div>
 
     </div>

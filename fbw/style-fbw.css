@@ -27,12 +27,15 @@ body {
 
 .profile-container {
   margin: 10px;
+  background: #ccc;
+  padding: 10px;
 }
 
 .profile__meta {
   background-color: #eee;
   font-size: 1rem;
   margin-top: 1em;
+  padding: 10px;
 }
 
 .profile {
@@ -62,7 +65,8 @@ body {
   position: relative;
 }
 
-.profile-cover .profile__headshot {
+.profile-cover .profile__headshot,
+.profile-cover .profile__headshot-bg {
   background-size: auto 100%;
   background-position: center;
   width: 100%;
@@ -71,13 +75,30 @@ body {
   top: 0;
 }
 
-.profile-cover .profile__headshot img {
-  width: 100%;
-  height: auto;
-  display: block;
+.profile-cover .profile__headshot {
+  background-repeat: no-repeat;
+}
+
+.profile-cover .profile__headshot-bg {
+  filter: blur(10px);
+  transform: scale(1.2);
+}
+
+.profile-cover.cover .profile__headshot {
+  background-size: cover;
+  background-position-y: top;
+}
+
+.profile-cover.mirror .profile__headshot {
+  transform: scaleX(-1);
+}
+
+.profile-cover.center .profile__headshot {
+  background-position: center center;
 }
 
 .profile-cover .profile__info {
+  box-sizing: border-box;
   background: #fff;
   padding: 0.2em;
   position: absolute;
@@ -107,125 +128,9 @@ body {
   font-size: .3em;
 }
 
-/* ============================== INSIDE ==================================== */
-
-.profile-inside .profile__label {
-  width: 90%;
-  margin-top: 2em;
-  margin-left: 5%;
-  box-sizing: border-box;
-  z-index: 1;
-  position: relative;
-}
-
-.profile-inside .profile__label .hash {
-  color: #fff;
-  display: block;
-  font-size: 0.7em;
-  font-weight: 600;
-  line-height: 1;
-}
-.profile-inside .profile__label .title {
-  color: var(--yellow);
+.profile__meta .textarea {
   font-size: 1em;
-  font-weight: 700;
-  text-transform: uppercase;
-  line-height: 1;
+  max-width: 510px;
+  padding: 10px;
+  font-family: monospace;
 }
-
-.profile-inside .profile__content {
-  width: 40%;
-  text-align: right;
-  position: absolute;
-  top: 4.8em;
-  right: 5%;
-  z-index: 15;
-}
-
-.profile-inside .profile__content p {
-  font-size: 0.3em;
-  color: #fff;
-  margin-bottom: 1em;
-}
-.profile-inside .profile__content .content {
-  box-shadow: -5px 0px 0 #00B3E788;
-  background-color: #00B3E788;
-}
-
-.profile-inside .profile__content label {
-  font-size: 1.5em;
-  color: var(--yellow);
-  display: block;
-  margin-bottom: 0.4em;
-}
-
-.profile-inside .profile__headshot {
-  width: 12em;
-  height: 12em;
-  position: absolute;
-  left: -1.5em;
-  bottom: 0em;
-  background-size: cover;
-  background-position: center;
-  border-radius: 100%;
-}
-
-.profile-inside .profile__circle {
-  font-size: .4em;
-  background-color: var(--yellow);
-  color: #421C6E;
-  position: absolute;
-  right: -0.8em;
-  bottom: 3em;
-  width: 15em;
-  height: 15em;
-  padding: 1em;
-  border-radius: 100%;
-  text-align: center;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.profile-inside .profile__circle p,
-.profile-inside .profile__circle ul {
-  font-size: 1em;
-  margin-bottom: 0.5em;
-}
-.profile-inside .profile__circle ul li {
-  display: inline;
-}
-.profile-inside .profile__circle ul li:not(:last-child):after {
-  content: ", ";
-}
-.profile-inside .profile__circle .title {
-  font-size: 1.5em;
-  font-weight: 800;
-  font-family: 'Oswald', sans-serif;
-  margin-bottom: 0.2em;
-}
-.profile-inside .profile__circle .profile__type {
-  font-style: oblique;
-}
-
-.profile-inside .flair {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: rotate(-30deg);
-  z-index: 20;
-}
-.profile-inside .flair div {
-  background-color: var(--yellow);
-  width: 5em;
-  height: 0.3em;
-}
-.profile-inside .flair .white { background-color: white; }
-.profile-inside .flair .long { width: 8em; }
-.profile-inside .flair .short { width: 2em; }
-.profile-inside .flair div:nth-child(1) {transform: translate(4em, 0.4em);}
-.profile-inside .flair div:nth-child(2) {transform: translate(1.1em, -9.9em);}
-.profile-inside .flair div:nth-child(3) { transform: translate(-8.4em, -1.5em); }
-.profile-inside .flair div:nth-child(4) {transform: translate(3.6em, -2.6em);}
-.profile-inside .flair div:nth-child(5) { transform: translate(-2.4em, 6em); }
-.profile-inside .flair div:nth-child(6) { transform: translate(-4.3em, -12.6em); }
