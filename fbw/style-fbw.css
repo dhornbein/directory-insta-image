@@ -100,17 +100,20 @@ body {
 .profile-cover .profile__info {
   box-sizing: border-box;
   background: #fff;
-  padding: 0.2em;
+  padding: 0 0.2em 0.2em;
   position: absolute;
   bottom: 0;
   width: 100%;
   margin: 0 auto;
   text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
 }
 
 .profile-cover .profile__info img {
-  float: right;
   width: 30%;
+  margin-top: 0.3em;
 }
 
 .profile-cover .profile__info .title {

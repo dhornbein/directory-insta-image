@@ -190,6 +190,11 @@ var app = new Vue({
 
       node.classList.toggle('rendering');
 
+      options = {
+        height: node.offsetHeight,
+        width: node.offsetWidth
+      }
+
       domtoimage.toPng(node, options)
         .then(function (dataUrl) {
           var img = new Image();
