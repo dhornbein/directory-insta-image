@@ -6,12 +6,7 @@ var app = new Vue({
     showTags: false,
 
     // base information about the target spreadsheet
-    base: {
-      // spreadsheet ID
-      id: "appnI6NxijahqhwNo",
-      table: 'tblkv17A5fiHT9LKN',
-      view: 'viwsPmvqI8gWO3dFo'
-    },
+    base: base,
     filter: {
       skills: {}
     },
@@ -269,7 +264,7 @@ var app = new Vue({
           thumbnail: url,
           name: r.fields['Speaker Full Name'],
           insta: self.sanitizeInstagram( r.fields.Instagram, 'instagram' ),
-          start: new Date( r.fields['Date Time'] ).toLocaleDateString("en-US", self.dateOptions)
+          start: new Date( r.fields['Date Start Time'] ).toLocaleDateString("en-US", self.dateOptions)
         });
       });
     }
